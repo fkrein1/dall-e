@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { GenerateImageUseCase } from './generateImageUseCase';
+import { GenerateImageUseCase } from './GenerateImageUseCase';
 
 export class GenerateImageController {
   async handle(req: Request, res: Response) {
