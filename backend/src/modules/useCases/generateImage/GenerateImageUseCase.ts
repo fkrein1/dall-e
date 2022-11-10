@@ -1,32 +1,28 @@
-import { Configuration, OpenAIApi } from 'openai';
 import { prisma } from '../../../database/prismaClient';
 import { AppError } from '../../../errors/AppError';
+import { IPictureProvider } from '../../../providers/PictureProvider/IProviderImage';
+import { IStorageProvider } from '../../../providers/StorageProvider/IStorageProvider';
 import { CreateImageSchema, ICreateImageDTO } from '../../dtos/ICreateImageDTO';
 
 export class GenerateImageUseCase {
+  constructor(
+    private storageProvider: IStorageProvider,
+    private pictureProvider: IPictureProvider,
+  ) {}
   async execute(image: ICreateImageDTO) {
     const parsed = CreateImageSchema.safeParse(image);
     if (!parsed.success) {
       throw new AppError(400, 'Invalid request schema');
     }
-
     const { prompt } = image;
 
-    const configuration = new Configuration({
-      apiKey: process.env.OPENAI_KEY,
-    });
-    const openai = new OpenAIApi(configuration);
+    const imageURL = await this.pictureProvider.generate(prompt);
+    const publicURL = await this.storageProvider.save(imageURL);
 
-    const result = await openai.createImage({
-      prompt,
-      n: 1,
-      size: '512x512',
+    const newImage = await prisma.image.create({
+      data: { url: publicURL, prompt },
     });
 
-    const url = result.data.data[0].url;
-    if (!url) throw new AppError(404, 'Error generating image');
-    const createdImage = await prisma.image.create({ data: { url, prompt } });
-
-    return createdImage;
+    return newImage;
   }
 }
