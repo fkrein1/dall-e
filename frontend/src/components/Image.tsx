@@ -1,5 +1,6 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import { Copy, X } from 'phosphor-react';
+import { useState } from 'react';
 import {
   CloseButton,
   Content,
@@ -14,8 +15,11 @@ interface ImageProps {
   prompt: string;
 }
 export function Image({ url, prompt }: ImageProps) {
+  const [copied, setCopied] = useState(false);
   function handleCopyToClipboard() {
     navigator.clipboard.writeText(prompt);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   }
   return (
     <Dialog.Root>
@@ -36,8 +40,12 @@ export function Image({ url, prompt }: ImageProps) {
             <div>
               <p>{prompt}</p>
               <button onClick={handleCopyToClipboard}>
-                <Copy size={16} />
-                Copy prompt
+                {copied && <span>Copied!</span>}
+                {!copied && (
+                  <>
+                    <Copy size={16} /> <span>Copy prompt</span>
+                  </>
+                )}
               </button>
             </div>
           </Prompt>

@@ -23,7 +23,7 @@ export function Home() {
     try {
       await generateImage(data.prompt);
     } catch (err) {
-      alert('Ran out of OpenAI Credits =/');
+      alert('Sorry, OpenAI API is unstable.');
     }
     await refetch();
     reset();
