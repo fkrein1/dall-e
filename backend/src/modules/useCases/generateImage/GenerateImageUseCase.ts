@@ -16,11 +16,11 @@ export class GenerateImageUseCase {
     }
     const { prompt } = image;
 
-    const imageURL = await this.pictureProvider.generate(prompt);
-    const publicURL = await this.storageProvider.save(imageURL);
+    const aiImageURL = await this.pictureProvider.generate(prompt);
+    const url = await this.storageProvider.save(aiImageURL);
 
     const newImage = await prisma.image.create({
-      data: { url: publicURL, prompt },
+      data: { url, prompt },
     });
 
     return newImage;
