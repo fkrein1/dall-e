@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ClipLoader } from 'react-spinners';
+import { Image } from '../../components/Image';
 import { generateImage } from '../../services/generateImage';
 import { getImages } from '../../services/getImages';
 import { HomeContainer, ImageForm, ImageGrid, Subtitle, Title } from './styles';
@@ -19,7 +20,11 @@ export function Home() {
   } = useForm<Inputs>();
 
   const handleGenerateImage: SubmitHandler<Inputs> = async (data) => {
-    await generateImage(data.prompt);
+    try {
+      await generateImage(data.prompt);
+    } catch (err) {
+      alert('Ran out of OpenAI Credits =/');
+    }
     await refetch();
     reset();
   };
@@ -40,6 +45,7 @@ export function Home() {
           {isSubmitting && 'Generating...'}
         </button>
       </ImageForm>
+
       <ImageGrid>
         {isSubmitting && (
           <div>
@@ -47,7 +53,7 @@ export function Home() {
           </div>
         )}
         {data?.map((image) => (
-          <img src={image.url} alt={image.prompt} key={image.id} />
+          <Image url={image.url} prompt={image.prompt} key={image.id} />
         ))}
       </ImageGrid>
     </HomeContainer>
