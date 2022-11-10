@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
-export const HomeContainer = styled.div`
-`;
+export const HomeContainer = styled.div``;
 
 export const Title = styled.h1`
   color: ${(props) => props.theme.white};
@@ -22,6 +21,9 @@ export const ImageForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
+  p {
+    font-size: 14px;
+  }
 
   textarea {
     font-size: 14px;
@@ -35,6 +37,10 @@ export const ImageForm = styled.form`
     border-radius: 20px;
     padding: 10px 16px;
     color: ${(props) => props.theme.white};
+
+    @media (max-width: 640px) {
+      width: 85vw;
+    }
   }
   textarea::placeholder {
     color: ${(props) => props.theme['base-text']};
@@ -49,22 +55,28 @@ export const ImageForm = styled.form`
     color: ${(props) => props.theme.white};
     cursor: pointer;
     box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    background: ${(props) => props.theme.indigo};
     background-image: linear-gradient(
       ${(props) => props.theme.indigo},
       ${(props) => props.theme['indigo-dark']}
     );
 
-    &:hover {
+    &:hover:not(:disabled) {
       background-image: linear-gradient(
         ${(props) => props.theme['indigo-light']},
         ${(props) => props.theme.indigo}
       );
     }
+
+    &:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
   }
 `;
 
 export const ImageGrid = styled.div`
-  margin-top: 50px;
+  margin-block: 50px;
   display: grid;
   margin-inline: 20px;
   grid-template-columns: repeat(4, 1fr);
@@ -72,5 +84,17 @@ export const ImageGrid = styled.div`
   img {
     max-width: 100%;
     border-radius: 20px;
+  }
+
+  div {
+    border-radius: 20px;
+    background: ${(props) => props.theme['base-input']};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media (max-width: 640px) {
+    grid-template-columns: repeat(2, 1fr);
   }
 `;
