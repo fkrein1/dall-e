@@ -79,9 +79,9 @@ export const ImageForm = styled.form`
 export const ImageGrid = styled.div`
   margin-block: 50px;
   display: grid;
-  margin-inline: 20px;
+  margin-inline: 8px;
   grid-template-columns: repeat(5, 1fr);
-  gap: 20px;
+  gap: 8px;
 
   div {
     border-radius: 20px;
