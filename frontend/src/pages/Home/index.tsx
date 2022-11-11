@@ -7,7 +7,14 @@ import usePageBottom from '../../hooks/usePageBottom';
 import { generateImage } from '../../services/generateImage';
 import { getImages } from '../../services/getImages';
 
-import { HomeContainer, ImageForm, ImageGrid, NexPageLoader, Subtitle, Title } from './styles';
+import {
+  HomeContainer,
+  ImageForm,
+  ImageGrid,
+  NexPageLoader,
+  Subtitle,
+  Title,
+} from './styles';
 
 type Inputs = {
   prompt: string;
@@ -16,14 +23,24 @@ type Inputs = {
 export function Home() {
   const isPageBottom = usePageBottom();
 
-  const { data, refetch, isFetchingNextPage, fetchNextPage, hasNextPage, isSuccess, isFetching } =
-    useInfiniteQuery(['images'], ({ pageParam = 1 }) => getImages(pageParam), {
+  const {
+    data,
+    refetch,
+    isFetchingNextPage,
+    fetchNextPage,
+    hasNextPage,
+    isSuccess,
+    isFetching,
+  } = useInfiniteQuery(
+    ['images'],
+    ({ pageParam = 1 }) => getImages(pageParam),
+    {
       getNextPageParam: (lastPage, allPages) => {
-        const maxImagesPerPage = 100;
-        if (lastPage.length < maxImagesPerPage) return null;
+        if (lastPage.length < allPages[0].length) return null;
         return allPages.length + 1;
       },
-    });
+    },
+  );
 
   useEffect(() => {
     if (isPageBottom && !isFetching && hasNextPage) {
@@ -79,10 +96,10 @@ export function Home() {
           )}
       </ImageGrid>
       {isFetchingNextPage && (
-          <NexPageLoader>
-            <ClipLoader size={60} color="#A1AAB3" />
-          </NexPageLoader>
-        )}
+        <NexPageLoader>
+          <ClipLoader size={60} color="#A1AAB3" />
+        </NexPageLoader>
+      )}
     </HomeContainer>
   );
 }
