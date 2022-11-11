@@ -1,9 +1,12 @@
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ClipLoader } from 'react-spinners';
 import { Image } from '../../components/Image';
+import usePageBottom from '../../hooks/usePageBottom';
 import { generateImage } from '../../services/generateImage';
 import { getImages } from '../../services/getImages';
+
 import { HomeContainer, ImageForm, ImageGrid, Subtitle, Title } from './styles';
 
 type Inputs = {
@@ -11,7 +14,23 @@ type Inputs = {
 };
 
 export function Home() {
-  const { data, refetch } = useQuery(['images'], getImages);
+  const isPageBottom = usePageBottom();
+
+  const { data, refetch, fetchNextPage, hasNextPage, isSuccess, isFetching } =
+    useInfiniteQuery(['images'], ({ pageParam = 1 }) => getImages(pageParam), {
+      getNextPageParam: (lastPage, allPages) => {
+        const maxImagesPerPage = 100;
+        if (lastPage.length < maxImagesPerPage) return null;
+        return allPages.length + 1;
+      },
+    });
+
+  useEffect(() => {
+    if (isPageBottom && !isFetching && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [fetchNextPage, hasNextPage, isPageBottom]);
+
   const {
     register,
     handleSubmit,
@@ -23,9 +42,7 @@ export function Home() {
     try {
       await generateImage(data.prompt);
     } catch (err) {
-      alert(
-        'Sorry, invalid promptor or reached request limit.',
-      );
+      alert('Sorry, invalid promptor or reached request limit.');
     }
     await refetch();
     reset();
@@ -54,9 +71,12 @@ export function Home() {
             <ClipLoader size={60} color="#A1AAB3" />
           </div>
         )}
-        {data?.map((image) => (
-          <Image url={image.url} prompt={image.prompt} key={image.id} />
-        ))}
+        {isSuccess &&
+          data.pages.map((page) =>
+            page.map((image) => (
+              <Image url={image.url} prompt={image.prompt} key={image.id} />
+            )),
+          )}
       </ImageGrid>
     </HomeContainer>
   );

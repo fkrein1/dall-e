@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { api } from '../lib/axios';
 
 interface Image {
   id: string;
@@ -6,7 +6,7 @@ interface Image {
   prompt: string;
 }
 
-export async function getImages(): Promise<Image[]> {
-  const { data } = await axios.get('https://dall-e-production.up.railway.app/images');
-  return data
+export async function getImages(page: number = 1): Promise<Image[]> {
+  const { data } = await api.get('/images', { params: { page } });
+  return data;
 }

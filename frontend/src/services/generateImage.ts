@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { api } from '../lib/axios';
 
 interface Image {
   id: string;
@@ -7,9 +7,6 @@ interface Image {
 }
 
 export async function generateImage(prompt: string): Promise<Image> {
-  const { data } = await axios.post(
-    'https://dall-e-production.up.railway.app/images',
-    { prompt },
-  );
+  const { data } = await api.post('images', { prompt });
   return data;
 }
