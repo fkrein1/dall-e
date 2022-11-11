@@ -23,7 +23,9 @@ export function Home() {
     try {
       await generateImage(data.prompt);
     } catch (err) {
-      alert('Sorry, OpenAI API is unstable.');
+      alert(
+        'Sorry, prompt is invalid or maxed out requests limit.',
+      );
     }
     await refetch();
     reset();
