@@ -80,7 +80,7 @@ export const ImageGrid = styled.div`
   margin-block: 50px;
   display: grid;
   margin-inline: 20px;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 20px;
 
   div {
@@ -91,12 +91,11 @@ export const ImageGrid = styled.div`
     justify-content: center;
   }
 
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(4, 1fr);
+
+  }
   @media (max-width: 640px) {
-    grid-template-columns: repeat(1, 1fr);
-    div {
-      margin:auto;
-      width: 85vw;
-      height: 85vw;
-    }
+    grid-template-columns: repeat(2, 1fr);
   }
 `;
