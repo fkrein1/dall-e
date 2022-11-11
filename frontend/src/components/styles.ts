@@ -80,7 +80,6 @@ export const Content = styled(Dialog.Content)`
   @media (max-width: 768px) {
     padding: 50px 16px 16px;
     width: 90vw;
-
   }
 `;
 
@@ -120,10 +119,10 @@ export const Prompt = styled(Dialog.Description)`
 `;
 
 export const ImageWrapper = styled.div`
-  @media (max-width: 768px) {
-    display: none;
-  }
   img {
     width: 90%;
+  }
+  @media (max-width: 768px) {
+    display: none;
   }
 `;

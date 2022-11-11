@@ -96,6 +96,7 @@ export const ImageGrid = styled.div`
     div {
       margin:auto;
       width: 85vw;
+      height: 85vw;
     }
   }
 `;
