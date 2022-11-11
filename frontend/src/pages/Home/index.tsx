@@ -24,7 +24,7 @@ export function Home() {
       await generateImage(data.prompt);
     } catch (err) {
       alert(
-        'Sorry, prompt is invalid or maxed out requests limit.',
+        'Sorry, invalid promptor or reached request limit.',
       );
     }
     await refetch();
