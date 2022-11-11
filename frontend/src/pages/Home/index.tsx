@@ -7,7 +7,7 @@ import usePageBottom from '../../hooks/usePageBottom';
 import { generateImage } from '../../services/generateImage';
 import { getImages } from '../../services/getImages';
 
-import { HomeContainer, ImageForm, ImageGrid, Subtitle, Title } from './styles';
+import { HomeContainer, ImageForm, ImageGrid, NexPageLoader, Subtitle, Title } from './styles';
 
 type Inputs = {
   prompt: string;
@@ -16,7 +16,7 @@ type Inputs = {
 export function Home() {
   const isPageBottom = usePageBottom();
 
-  const { data, refetch, fetchNextPage, hasNextPage, isSuccess, isFetching } =
+  const { data, refetch, isFetchingNextPage, fetchNextPage, hasNextPage, isSuccess, isFetching } =
     useInfiniteQuery(['images'], ({ pageParam = 1 }) => getImages(pageParam), {
       getNextPageParam: (lastPage, allPages) => {
         const maxImagesPerPage = 100;
@@ -78,6 +78,11 @@ export function Home() {
             )),
           )}
       </ImageGrid>
+      {isFetchingNextPage && (
+          <NexPageLoader>
+            <ClipLoader size={60} color="#A1AAB3" />
+          </NexPageLoader>
+        )}
     </HomeContainer>
   );
 }
