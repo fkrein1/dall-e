@@ -81,7 +81,7 @@ export const ImageGrid = styled.div`
   display: grid;
   margin-inline: 20px;
   grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
+  gap: 20px;
 
   div {
     border-radius: 20px;
@@ -93,5 +93,9 @@ export const ImageGrid = styled.div`
 
   @media (max-width: 640px) {
     grid-template-columns: repeat(1, 1fr);
+    div {
+      margin:auto;
+      width: 85vw;
+    }
   }
 `;
