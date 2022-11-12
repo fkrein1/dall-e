@@ -22,6 +22,12 @@ type Inputs = {
 
 export function Home() {
   const isPageBottom = usePageBottom();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<Inputs>();
 
   const {
     data,
@@ -48,19 +54,13 @@ export function Home() {
     }
   }, [fetchNextPage, hasNextPage, isPageBottom]);
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors, isSubmitting },
-  } = useForm<Inputs>();
-
   const handleGenerateImage: SubmitHandler<Inputs> = async (data) => {
     try {
       await generateImage(data.prompt);
     } catch (err) {
-      alert(`Sorry. We ran out of OpenAI credits.
-        Try using https://lexica.art/ based on Stable Difusion AI.`);
+      alert(
+        'Sorry. We ran out of OpenAI credits. Check out lexica.art based on Stable Difusion AI.',
+      );
     }
     await refetch();
     reset();
@@ -73,7 +73,7 @@ export function Home() {
 
       <ImageForm>
         <textarea
-          {...register('prompt', { required: true, min: 8 })}
+          {...register('prompt', { required: true, minLength: 8 })}
           placeholder="Describe the image you'd like to see"
         />
         {errors.prompt && <p>Use at least 8 digits to describe your image</p>}
