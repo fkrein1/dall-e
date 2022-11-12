@@ -5,23 +5,25 @@ export const ImageContainer = styled.div`
   cursor: pointer;
   position: relative;
 
-  &:hover {
-    background: linear-gradient(
-      0deg,
-      rgba(0, 0, 0, 0.8) 0%,
-      rgba(0, 0, 0, 0.4) 40%,
-      rgba(0, 0, 0, 0.1) 100%
-    );
-    box-shadow: 0 0 100px 30px #000 inset;
-
-    transition: all 0.2s;
-
-    p {
-      display: block;
-    }
-
-    img {
-      opacity: 0.4;
+  @media (min-width: 640px) {
+    &:hover {
+      background: linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.8) 0%,
+        rgba(0, 0, 0, 0.4) 40%,
+        rgba(0, 0, 0, 0.1) 100%
+      );
+      box-shadow: 0 0 100px 30px #000 inset;
+  
+      transition: all 0.2s;
+  
+      p {
+        display: block;
+      }
+  
+      img {
+        opacity: 0.4;
+      }
     }
   }
   img {
