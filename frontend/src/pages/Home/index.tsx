@@ -59,7 +59,7 @@ export function Home() {
     try {
       await generateImage(data.prompt);
     } catch (err) {
-      alert('Sorry, invalid promptor or reached request limit.');
+      alert('Sorry, ran out of OpenAI credits.');
     }
     await refetch();
     reset();
