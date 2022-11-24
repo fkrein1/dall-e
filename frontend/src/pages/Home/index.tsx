@@ -59,7 +59,7 @@ export function Home() {
       await generateImage(data.prompt);
     } catch (err) {
       alert(
-        'Sorry. We ran out of OpenAI credits. Check out lexica.art based on Stable Difusion AI.',
+        'Sorry. We ran out of OpenAI credits.',
       );
     }
     await refetch();
