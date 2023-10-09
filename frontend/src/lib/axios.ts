@@ -1,8 +1,6 @@
 import axios from 'axios';
 
-const baseURL = import.meta.env.PROD
-  ? 'https://dall-e-production.up.railway.app'
-  : 'http://localhost:3008';
+const baseURL = 'https://dall-e-production.up.railway.app'
 
 export const api = axios.create({
   baseURL,

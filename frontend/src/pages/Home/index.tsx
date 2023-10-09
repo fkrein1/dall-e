@@ -76,7 +76,7 @@ export function Home() {
           {...register('prompt', { required: true, minLength: 8 })}
           placeholder="Describe the image you'd like to see"
         />
-        {errors.prompt && <p>Use at least 8 digits to describe your image</p>}
+        {errors.prompt && <p>Use at least 8 characters to describe your image</p>}
         <button type="submit" disabled={isSubmitting}>
           {!isSubmitting && 'Generate'}
           {isSubmitting && 'Generating...'}
