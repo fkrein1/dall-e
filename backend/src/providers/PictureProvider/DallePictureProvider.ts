@@ -17,7 +17,7 @@ export class DallePictureProvider implements IPictureProvider {
       model: "dall-e-3",
       prompt,
       n: 1,
-      size: '512x512',
+      size: '1024x1024',
     });
 
     const imageURL = result.data[0].url;
