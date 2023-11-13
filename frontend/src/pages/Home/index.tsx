@@ -55,12 +55,18 @@ export function Home() {
   }, [fetchNextPage, hasNextPage, isPageBottom]);
 
   const handleGenerateImage: SubmitHandler<Inputs> = async (data) => {
+    const currentDate = new Date();
+    const dayOfMonth = String(currentDate.getDate());
+    const lastImageDay = localStorage.getItem('@dall-e-art:day');
+    if (dayOfMonth === lastImageDay) {
+      return alert('Sorry. You reached your daily limit.');
+    }
+
     try {
       await generateImage(data.prompt);
+      localStorage.setItem('@dall-e-art:day', dayOfMonth);
     } catch (err) {
-      alert(
-        'Sorry. We ran out of OpenAI credits.',
-      );
+      alert('Sorry. We ran out of OpenAI credits.');
     }
     await refetch();
     reset();
@@ -76,7 +82,9 @@ export function Home() {
           {...register('prompt', { required: true, minLength: 8 })}
           placeholder="Describe the image you'd like to see"
         />
-        {errors.prompt && <p>Use at least 8 characters to describe your image</p>}
+        {errors.prompt && (
+          <p>Use at least 8 characters to describe your image</p>
+        )}
         <button type="submit" disabled={isSubmitting}>
           {!isSubmitting && 'Generate'}
           {isSubmitting && 'Generating...'}
