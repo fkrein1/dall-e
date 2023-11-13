@@ -6,7 +6,15 @@ interface Image {
   prompt: string;
 }
 
-export async function generateImage(prompt: string): Promise<Image> {
-  const { data } = await api.post('images', { prompt });
+export async function generateImage(prompt: string) {
+  const currentDate = new Date();
+  const dayOfMonth = String(currentDate.getDate());
+  const lastImageDay = localStorage.getItem('day');
+  if (dayOfMonth === lastImageDay) {
+    return alert('Sorry. You reached your daily limit.');
+  }
+
+  localStorage.setItem('day', dayOfMonth);
+  const { data } = await api.post<Image>('images', { prompt });
   return data;
 }
