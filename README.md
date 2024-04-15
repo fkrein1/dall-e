@@ -8,7 +8,7 @@ Generate an image based on a text prompt using DALL·E OpenAI API.
 
 <br>
 
-<a href="https://dall-eart.vercel.app">Website</a>
+<a href="https://dalleart.vercel.app">Website</a>
 <br>
 <br>
-<a href="https://dall-eart.vercel.app"><img src="./dall-e.png"/></a>
+<a href="https://dalleart.vercel.app"><img src="./dall-e.png"/></a>
