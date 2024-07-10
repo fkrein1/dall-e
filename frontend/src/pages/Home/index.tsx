@@ -76,6 +76,9 @@ export function Home() {
     <HomeContainer onSubmit={handleSubmit(handleGenerateImage)}>
       <Title>DALL·E ART</Title>
       <Subtitle>The GPT-3 AI image generator</Subtitle>
+      <a href="javascript:window.ReactNativeWebView.postMessage('closeModal')">
+        CONCLUIR
+      </a>
 
       <ImageForm>
         <textarea
